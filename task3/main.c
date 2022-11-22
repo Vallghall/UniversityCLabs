@@ -1,7 +1,7 @@
 #include "stdio.h"
 #include "stdlib.h"
-#include "mem.h"
 #include <conio.h>
+#include <mem.h>
 
 int file_size(FILE*);
 char* readAll(FILE*);
@@ -64,7 +64,10 @@ char* readByNLines(FILE* file, int line_limit) {
             fprintf(stderr, "Error reading char from file");
             exit(1);
         }
-        if (sym == EOF) break;
+        if (sym == EOF) {
+            memset(part_buf + ch_count, 0, max_part_buf - ch_count);
+            break;
+        }
 
         if (ch_count == max_part_buf) {
             max_part_buf += 128;
@@ -81,14 +84,15 @@ char* readByNLines(FILE* file, int line_limit) {
             if (line_count != line_limit)
                 continue;
 
-            line_count = 0, ch_count = 0;
-            printf("%sPress ENTER key to continue...", part_buf);
+            printf("%sPress any key to continue...", part_buf);
             getch();
             printf("\b\r                                      \r");
 
+            int old_max = max_part_buf;
             max_part_buf = 128 * line_limit;
             part_buf = realloc(part_buf, max_part_buf);
-            memset(part_buf, 0, max_part_buf);
+            memset(part_buf + ch_count, 0, old_max - ch_count);
+            line_count = 0, ch_count = 0;
         }
     }
 
