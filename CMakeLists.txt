@@ -12,3 +12,6 @@ add_executable(task3 task3/main.c)
 
 project(task4 C)
 add_executable(task4 task4/main.c)
+
+project(task5 C)
+add_executable(task5 task5/main.c)

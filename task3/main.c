@@ -1,7 +1,7 @@
 #include "stdio.h"
 #include "stdlib.h"
-#include <conio.h>
-#include <mem.h>
+#include <curses.h>
+#include <memory.h>
 
 int file_size(FILE*);
 char* readAll(FILE*);
@@ -17,7 +17,7 @@ int main(int argc, char** argv, char** envp) {
     FILE* f = fopen(argv[1], "r");
     if (f == NULL) {
         perror("could not open file");
-        exit(errno);
+        exit(2);
     }
 
     int N = strtol(argv[2], (char**)NULL, 10);

@@ -1,5 +1,8 @@
 #include "stdlib.h"
 #include "stdio.h"
+#include "sys/stat.h"
+
+typedef struct stat* stats;
 
 int main(int argc, char** argv, char** envp) {
     // check if the argument with the filename is provided
@@ -35,5 +38,14 @@ int main(int argc, char** argv, char** envp) {
     fclose(file1);
     fclose(file2);
 
+    // copy permissions
+    stats file1_stats = (stats)malloc(sizeof(struct stat));
+    int err = stat(argv[1], file1_stats);
+    if (err != 0) {
+        fprintf(stderr, "error getting stats fo file \"%s\"", argv[1]);
+        exit(err);
+    }
+
+    chmod(argv[2], file1_stats->st_mode);
     return 0;
 }

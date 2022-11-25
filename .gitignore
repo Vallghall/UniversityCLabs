@@ -1,5 +1,10 @@
 /.idea
-./cmake-build-debug
+/cmake-build-debug
 
 *.txt
+
+# unix executable
+task
+
+# for windows
 *.exe
